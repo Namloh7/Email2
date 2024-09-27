@@ -1,5 +1,7 @@
-﻿using System;
+﻿using EMAILS;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Reflection.Emit;
@@ -9,100 +11,69 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace Email
-{
+
+{ //konstruktor, list lidí
     internal class Program
     {
         static void Main(string[] args)
         {
-            List<string> emails = new List<string>();
-            Console.WriteLine("Write your email in this format: name.surnamenumber@mailserver.domain");
-            Console.WriteLine("Write done when you are finished");
-            
-            string input = @"jan.novak1987@seznam.cz
-pavel.kral193 @gmail.com
-lucie.kovarikova2001 @outlook.com
-marketa.svobodova1990 @centrum.cz
-petr.kubicek18 @gmail.com
-lenka.vanickova1986 @seznam.cz
-tomas.horak1992 @post.cz
-martin.krejci200344 @yahoo.com
-veronika.hrdlickova1999 @seznam.cz
-eva.nemcova1984 @gmail.com
-milan.cerny1969 @centrum.cz
-jakub.dolezal187 @outlook.com
-jitka.kucerova1972 @seznam.cz
-ondrej.bernard1998 @gmail.com
-zdenek.havlicek1977 @yahoo.com
-jana.vitkova5756 @post.cz
-radek.kolar4565 @centrum.cz
-roman.svoboda1996 @gmail.com
-klara.mrazkova1991 @seznam.cz
-pavlina.machova182 @gmail.com";
+
+            //List<string> emails = new List<string>();
+            //List<Person> persons = new List<Person>();
+            //string currentDirectory = "Emaily.txt";
+            //emails = File.ReadAllLines(currentDirectory).ToList();
+            //List<Person> Persons = new List<Person>();
+
+            //foreach (string email in emails)
+            //{
 
 
 
-            string[] emailArray = emails.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            //    string[] parts = email.Split('@');
+            //    string ndPart = parts[1];
+            //    string stPart = parts[0];
 
-            foreach (string email in emailArray) 
-            {
-                string[] parts = email.Split('@');
-                string ndPart = parts[1];
-                string stPart = parts[0];
-                //číslo
-                string number = Regex.Replace(email, @"\D", "");
-                int intnum = Convert.ToInt32(number);
+            //    string number = Regex.Replace(email, @"\D", "");
+            //    int intnum = Convert.ToInt32(number);
 
+            //    string[] names = stPart.Split('.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
+            //    string name = names[0];
+            //    string surname = names[1];
 
-
-
-                //Křestní jméno, příjmeňí
-
-                string[] names = stPart.Split('.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
-                string name = names[0];
-                string surname = names[1];
-
-                //Doména
-                string[] DomainMS = ndPart.Split('.');
-                string mailserver = DomainMS[0];
-                string Domain = DomainMS[1];
-
-                Console.WriteLine("******************************");
-                Thread.Sleep(25);
-                Console.Write("Your name: "); SlowRead(name);
-                Console.Write("Your surname: "); SlowRead(surname);
-                Console.Write("Mailserver: "); SlowRead(mailserver);
-                Console.Write("Domain: "); SlowRead(Domain);
-                if (NumCheck(intnum) != -1)
-                {
-                    Thread.Sleep(25);
-                    Console.Write("The year you were born: " + intnum);
-                    Console.WriteLine();
-                    int Age = 2024 - intnum;
-                    Console.Write("Your age: " + Age);
-
-                }
-
-
-                Console.WriteLine();
-
-                Console.WriteLine("******************************");
+            //    string[] DomainMS = ndPart.Split('.');
+            //    string mailserver = DomainMS[0];
+            //    string domain = DomainMS[1];
 
 
 
-            }
+            //    if (NumCheck(intnum) != -1)
+            //    {
+
+            //        int age = 2024 - intnum;
 
 
+            //        persons.Add(new Person { Name = name, Surname = surname, Mailserver = mailserver, Domain = domain, Age = age });
+            //    }
+            //    persons.Add(new Person { Name = name, Surname = surname, Mailserver = mailserver, Domain = domain});
 
-
-
+            //}
+            //Console.WriteLine("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+            //foreach(var person in persons) 
+            //{
+            //    Console.WriteLine(person.Name);
+            //    Console.WriteLine(person.Surname);
+            //    Console.WriteLine(person.Mailserver);
+            //    Console.WriteLine(person.Domain);
+            //    if (person.Age.HasValue) 
+            //    { 
+            //        Console.WriteLine(person.Age);
+            //    }
+            //    Console.WriteLine("___________________________");
+            //}
 
             
-            
+            //Console.Read();
 
-            
-
-
-            Console.Read();
 
         }
         static int NumCheck(int number)
