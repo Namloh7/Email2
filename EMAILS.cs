@@ -17,62 +17,68 @@ namespace Email
     {
         static void Main(string[] args)
         {
+        List<Person> persons = new List<Person>();
+        List<string> emails = new List<string>();
+             
+            string currentDirectory = "Emaily.txt";
 
-            //List<string> emails = new List<string>();
-            //List<Person> persons = new List<Person>();
-            //string currentDirectory = "Emaily.txt";
-            //emails = File.ReadAllLines(currentDirectory).ToList();
-            //List<Person> Persons = new List<Person>();
-
-            //foreach (string email in emails)
-            //{
+            emails = File.ReadAllLines(currentDirectory).ToList();
 
 
 
-            //    string[] parts = email.Split('@');
-            //    string ndPart = parts[1];
-            //    string stPart = parts[0];
-
-            //    string number = Regex.Replace(email, @"\D", "");
-            //    int intnum = Convert.ToInt32(number);
-
-            //    string[] names = stPart.Split('.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
-            //    string name = names[0];
-            //    string surname = names[1];
-
-            //    string[] DomainMS = ndPart.Split('.');
-            //    string mailserver = DomainMS[0];
-            //    string domain = DomainMS[1];
+            foreach (string email in emails)
+            {
 
 
 
-            //    if (NumCheck(intnum) != -1)
-            //    {
+                string[] parts = email.Split('@');
+                string ndPart = parts[1];
+                string stPart = parts[0];
 
-            //        int age = 2024 - intnum;
+                string number = Regex.Replace(email, @"\D", "");
+                int intnum;
+                bool hasValidNumber = int.TryParse(number, out intnum);
+
+                string[] names = stPart.Split('.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
+                string name = names[0];
+                string surname = names[1];
+
+                string[] DomainMS = ndPart.Split('.');
+                string mailserver = DomainMS[0];
+                string domain = DomainMS[1];
+
+                if (hasValidNumber && NumCheck(intnum) != -1)
+                {
+                    int age = 2024 - intnum;
+                    Person person = new Person(name, surname, mailserver, domain, age);
+                    persons.Add(person);
+                }
+                else 
+                {
+                    Person person = new Person(name, surname, mailserver, domain);
+                    persons.Add(person);
+                }
 
 
-            //        persons.Add(new Person { Name = name, Surname = surname, Mailserver = mailserver, Domain = domain, Age = age });
-            //    }
-            //    persons.Add(new Person { Name = name, Surname = surname, Mailserver = mailserver, Domain = domain});
 
-            //}
-            //Console.WriteLine("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
-            //foreach(var person in persons) 
-            //{
-            //    Console.WriteLine(person.Name);
-            //    Console.WriteLine(person.Surname);
-            //    Console.WriteLine(person.Mailserver);
-            //    Console.WriteLine(person.Domain);
-            //    if (person.Age.HasValue) 
-            //    { 
-            //        Console.WriteLine(person.Age);
-            //    }
-            //    Console.WriteLine("___________________________");
-            //}
+                
+            }
+            int i = 0;
+            foreach(Person p in persons) 
+            {
+                Console.WriteLine("Your name. " + p.Name);
+                Console.WriteLine("Your surname. " + p.Surname);
+                Console.WriteLine("Your mailserver: " + p.Mailserver);
+                Console.WriteLine("Your domain: " + p.Domain);
+                if (p.Age != null) 
+                {
+                    Console.WriteLine("Your age: " + p.Age);
+                }
+                Console.WriteLine("++++++++++++++++++++++++++++++++++++++");
 
-            
-            //Console.Read();
+            }
+
+            Console.Read();
 
 
         }
@@ -92,19 +98,13 @@ namespace Email
 
 
         }
-        static void SlowRead(string s)
-        {
-
-            foreach (char c in s)
-            {
-                Thread.Sleep(25);
-                Console.Write(c);
-            }
-            Console.WriteLine();
-        }
-
-
 
     }
+        
+        
+
+
+
+    
 
 }
