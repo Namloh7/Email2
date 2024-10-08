@@ -17,14 +17,14 @@ namespace Email
     {
         static void Main(string[] args)
         {
-            Person.Peoples();
+            Person personManager = new Person("", "", "", "");
+            List<Person> persons = personManager.Peoples();
+            
+            foreach (Person person in persons)
+            {
+                person.PrintInfo();
 
-
-
-            
-            
-            
-            
+            }
 
             Console.Read();
 

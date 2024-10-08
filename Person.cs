@@ -33,7 +33,18 @@ namespace EMAILS
 
 
         }
-        public static void Peoples()
+        public void PrintInfo() 
+        {
+            
+            Console.WriteLine("Your name. " + Name);
+                Console.WriteLine("Your surname. " + Surname);
+                Console.WriteLine("Your mailserver: " + Mailserver);
+               Console.WriteLine("Your domain: " + Domain);
+               if (Age != null) Console.WriteLine("Your age: " + Age);           
+                Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+
+        }
+        public List<Person> Peoples()
         {
             List<Person> persons = new List<Person>();
             string currentDirectory = "Emaily.txt";
@@ -47,7 +58,6 @@ namespace EMAILS
                 string stPart = parts[0];
 
                 string number = Regex.Replace(email, @"\D", "");
-
                 bool hasValidNumber = int.TryParse(number, out int intnum);
 
                 string[] names = stPart.Split('.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
@@ -59,38 +69,22 @@ namespace EMAILS
                 string domain = DomainMS[1];
 
                 if (hasValidNumber && intnum >= DateTime.Now.Year - 100 && intnum <= DateTime.Now.Year)
-                { 
-                
-                int age = DateTime.Now.Year - intnum;
+                {
+
+                    int age = DateTime.Now.Year - intnum;
                     Person person = new Person(name, surname, mailserver, domain, age);
                     persons.Add(person);
-                }else 
+                }
+                else
                 {
                     Person person = new Person(name, surname, mailserver, domain);
                     persons.Add(person);
                 }
-                foreach (Person p in persons)
-                {
-                    Console.WriteLine("Your name. " + p.Name);
-                    Console.WriteLine("Your surname. " + p.Surname);
-                    Console.WriteLine("Your mailserver: " + p.Mailserver);
-                    Console.WriteLine("Your domain: " + p.Domain);
-                    if (p.Age != null)
-                    {
-                        Console.WriteLine("Your age: " + p.Age);
-                    }
-                    Console.WriteLine("++++++++++++++++++++++++++++++++++++++");
 
-                }
-
+                
             }
-
-
-
-
-
-
-
+            return persons;
         }
     }
 }
+        
