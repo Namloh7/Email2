@@ -12,78 +12,48 @@ namespace EMAILS
 {
     internal class Person
     {
+        public string Email;
         public string Name;
         public string Surname;
         public string Mailserver;
         public string Domain;
         public int? Age;
-
-
-        public Person(string name, string surname, string mailserver, string domain, int? age = null)
+        public Person(string email)
         {
-            this.Name = name;
-            this.Surname = surname;
-            this.Mailserver = mailserver;
-            this.Domain = domain;
-            this.Age = age;
-
-
-
-
-
-
+            this.Email = email; 
+            DataFromEmail();
         }
-        public void PrintInfo() 
+        private void PrintInfo()
         {
-            
-            Console.WriteLine("Your name. " + Name);
-                Console.WriteLine("Your surname. " + Surname);
-                Console.WriteLine("Your mailserver: " + Mailserver);
-               Console.WriteLine("Your domain: " + Domain);
-               if (Age != null) Console.WriteLine("Your age: " + Age);           
-                Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
-
+            //Console.WriteLine("Your name. " + Name);
+            //Console.WriteLine("Your surname. " + Surname);
+            //Console.WriteLine("Your mailserver: " + Mailserver);
+            //Console.WriteLine("Your domain: " + Domain);
+            //if (Age != null) Console.WriteLine("Your age: " + Age);
+            //Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
         }
-        public List<Person> Peoples()
+        private void DataFromEmail()
         {
-            List<Person> persons = new List<Person>();
-            string currentDirectory = "Emaily.txt";
-            List<string> emails = new List<string>();
-            emails = File.ReadAllLines(currentDirectory).ToList();
+            string[] parts = this.Email.Split('@');
+            string ndPart = parts[1];
+            string stPart = parts[0];
 
-            foreach (string email in emails)
+            string number = Regex.Replace(this.Email, @"\D", "");
+            bool hasValidNumber = int.TryParse(number, out int intnum);
+
+            string[] names = stPart.Split('.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
+            this.Name = names[0];
+            this.Surname = names[1];
+
+            string[] DomainMS = ndPart.Split('.');
+            this.Mailserver = DomainMS[0];
+            this.Domain = DomainMS[1];
+
+            if (hasValidNumber && intnum >= DateTime.Now.Year - 100 && intnum <= DateTime.Now.Year)
             {
-                string[] parts = email.Split('@');
-                string ndPart = parts[1];
-                string stPart = parts[0];
-
-                string number = Regex.Replace(email, @"\D", "");
-                bool hasValidNumber = int.TryParse(number, out int intnum);
-
-                string[] names = stPart.Split('.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
-                string name = names[0];
-                string surname = names[1];
-
-                string[] DomainMS = ndPart.Split('.');
-                string mailserver = DomainMS[0];
-                string domain = DomainMS[1];
-
-                if (hasValidNumber && intnum >= DateTime.Now.Year - 100 && intnum <= DateTime.Now.Year)
-                {
-
-                    int age = DateTime.Now.Year - intnum;
-                    Person person = new Person(name, surname, mailserver, domain, age);
-                    persons.Add(person);
-                }
-                else
-                {
-                    Person person = new Person(name, surname, mailserver, domain);
-                    persons.Add(person);
-                }
-
-                
+                this.Age = DateTime.Now.Year - intnum;
             }
-            return persons;
+            PrintInfo();
         }
     }
 }

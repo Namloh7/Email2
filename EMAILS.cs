@@ -17,27 +17,16 @@ namespace Email
     {
         static void Main(string[] args)
         {
-            Person personManager = new Person("", "", "", "");
-            List<Person> persons = personManager.Peoples();
-            
-            foreach (Person person in persons)
+            List<Person> persons = new List<Person>();
+            string currentDirectory = "Emaily.txt";
+            List<string> emails = new List<string>();
+            emails = File.ReadAllLines(currentDirectory).ToList();
+
+            foreach (string email in emails)
             {
-                person.PrintInfo();
-
+                Person person = new Person(email);
             }
-
             Console.Read();
-
-
         }
-        
-
     }
-        
-        
-
-
-
-    
-
 }
