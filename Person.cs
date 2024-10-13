@@ -8,29 +8,98 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EMAILS
+namespace EMAILZ
 {
     internal class Person
     {
-        public string Email;
-        public string Name;
-        public string Surname;
-        public string Mailserver;
-        public string Domain;
-        public int? Age;
+        private string email;
+        public string Email 
+        { 
+            get { return email; }
+            set 
+            { 
+            email = value;
+            }
+        }
+
+        private string name;
+        public string Name 
+        { 
+            get { return name; }
+            set {  name = value; }
+            
+        }
+
+        private string surname;
+        public string Surname
+        {
+            get { return surname; }
+            set { surname = value; }
+        
+        }
+        private string mailserver;
+        public string Mailserver
+        {
+            get { return mailserver; }
+            set { mailserver = value; }
+        }
+        private string domain;
+        public string Domain
+        {
+            get { return domain;}
+            set { domain = value; }
+        }
+        private int? age;
+        public int? Age
+        {
+            get { return age;}
+            set 
+            {
+
+                if (value >= DateTime.Now.Year - 100 && value <= DateTime.Now.Year)
+                {
+                    age = DateTime.Now.Year - value;
+                }
+                else value = null; 
+            }
+        
+        
+        }
+        private int? bornYear;
+        public int? BornYear 
+        { 
+        get { return bornYear;}
+        set 
+            { 
+            if (value >= DateTime.Now.Year - 100 && value <= DateTime.Now.Year) 
+            {
+                    bornYear = value;   
+            }else value = null;
+
+
+
+            }
+        
+        }
+
+        
+
         public Person(string email)
         {
-            this.Email = email; 
+            this.Email = email;
             DataFromEmail();
         }
         private void PrintInfo()
         {
-            //Console.WriteLine("Your name. " + Name);
-            //Console.WriteLine("Your surname. " + Surname);
-            //Console.WriteLine("Your mailserver: " + Mailserver);
-            //Console.WriteLine("Your domain: " + Domain);
-            //if (Age != null) Console.WriteLine("Your age: " + Age);
-            //Console.WriteLine("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Your name: " + Name);
+            sb.AppendLine("Your surname. " + Surname);
+            sb.AppendLine("Your mailserver: " + Mailserver);
+            sb.AppendLine("Your domain: " + Domain);
+            if (Age != null) sb.AppendLine("Your age: " + Age);
+            if (BornYear != null) sb.AppendLine("You were born in: " + BornYear);
+            sb.Append("■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■");
+            Console.WriteLine(sb.ToString());
         }
         private void DataFromEmail()
         {
@@ -39,7 +108,7 @@ namespace EMAILS
             string stPart = parts[0];
 
             string number = Regex.Replace(this.Email, @"\D", "");
-            bool hasValidNumber = int.TryParse(number, out int intnum);
+            
 
             string[] names = stPart.Split('.', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
             this.Name = names[0];
@@ -49,12 +118,8 @@ namespace EMAILS
             this.Mailserver = DomainMS[0];
             this.Domain = DomainMS[1];
 
-            if (hasValidNumber && intnum >= DateTime.Now.Year - 100 && intnum <= DateTime.Now.Year)
-            {
-                this.Age = DateTime.Now.Year - intnum;
-            }
+            
             PrintInfo();
         }
     }
 }
-        
