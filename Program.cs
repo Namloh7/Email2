@@ -1,33 +1,40 @@
-﻿
-using EMAILZ;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net.NetworkInformation;
-using System.Reflection.Emit;
+using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 
-namespace EMAILZ
-
-{ //konstruktor, list lidí
+namespace ToDoClass
+{
     internal class Program
     {
         static void Main(string[] args)
         {
-            List<Person> persons = new List<Person>();
-            string currentDirectory = "Emaily.txt";
-            List<string> emails = new List<string>();
-            emails = File.ReadAllLines(currentDirectory).ToList();
-
-            foreach (string email in emails)
+            while (true)
             {
-                Person person = new Person(email);
+                bool gcontinue = true;
+                while(gcontinue) 
+                {
+                    Console.WriteLine("Write 1 to show your list, 2 to add tomething to it and 3 to remove smth from it");
+                    string input = Console.ReadLine();
+                    bool IsNumber = int.TryParse(input, out int intnumber);
+                    if (IsNumber)
+                    {
+                        if (intnumber <= 3 && intnumber >= 1)
+                        {
+                            gcontinue = false;
+                            int num = intnumber;
+                            ToDo task = new ToDo(num);
+                        }
+                    }
+                    else { gcontinue = true; }
+
+                }
+
             }
-            Console.Read();
         }
+ 
     }
+
 }
