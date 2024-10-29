@@ -6,24 +6,17 @@ using System.Threading.Tasks;
 
 namespace ToDoClass
 {
-    internal class ToDo
+    public class ToDo
     {
         private string task{  get; set; }
-        private static List<ToDo> Tasks = new List<ToDo>();
+        public static List<ToDo> Tasks = new List<ToDo>();
     public ToDo(int  num) 
-        { 
-            if (num == 1) { PrintList(); }
-            if(num == 2) { AddTask(); }
-            if(num == 3) { RemoveTask(); }
-        }
-
-        private void AddTask() 
         {
-            Console.WriteLine("Add to your list: ");
-            this.task = Console.ReadLine();
-            Tasks.Add(this);
+            if (num == 1) { PrintList(); } 
+            if (num == 2) { AddRemove.AddTask();}
+            if (num == 2) { AddRemove.RemoveTask(); }
         }
-        private void PrintList() 
+        public static void PrintList() 
         {
             int i = 1;
         foreach(var o in Tasks) 
@@ -32,15 +25,6 @@ namespace ToDoClass
                 i++;
             }
         }
-        private void RemoveTask() 
-        {
-            PrintList();
-            Console.WriteLine("What task do you want to remove: ");
-            string input = Console.ReadLine();
-            int.TryParse(input, out int num);
-            int removenum = num - 1;
-            Tasks.RemoveAt(removenum);
-            PrintList();
-        }
+        
     }
 }   
